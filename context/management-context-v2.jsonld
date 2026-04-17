@@ -35,7 +35,10 @@
           "@id": "edc:labels",
           "@container": "@set"
         },
-        "properties": "edc:properties"
+        "properties": {
+          "@id": "edc:properties",
+          "@type": "@json"
+        }
       }
     },
     "CatalogAsset": {
@@ -215,7 +218,8 @@
         "consumerId": "edc:consumerId",
         "assetId": "edc:assetId",
         "agreementId": "edc:agreementId",
-        "contractSigningDate": "edc:contractSigningDate"
+        "contractSigningDate": "edc:contractSigningDate",
+        "claims": "edc:claims"
       }
     },
     "TransferRequest": {
@@ -495,6 +499,10 @@
         "leftOperand": "edc:leftOperand",
         "scopes": {
           "@id": "edc:scopes",
+          "@container": "@set"
+        },
+        "actions": {
+          "@id": "edc:actions",
           "@container": "@set"
         },
         "expression": "edc:expression",
