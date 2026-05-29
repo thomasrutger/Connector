@@ -2,13 +2,18 @@
   "@context": {
     "@version": 1.1,
     "edc": "https://w3id.org/edc/v0.0.1/ns/",
+    "dct": "http://purl.org/dc/terms/",
     "Asset": {
       "@id": "edc:Asset",
       "@context": {
         "properties": {
           "@id": "edc:properties",
           "@context": {
-            "@vocab": "https://w3id.org/edc/v0.0.1/ns/"
+            "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
+            "conformsTo": {
+              "@id": "dct:conformsTo",
+              "@type": "@id"
+            }
           }
         },
         "privateProperties": {
@@ -38,6 +43,10 @@
         "properties": {
           "@id": "edc:properties",
           "@type": "@json"
+        },
+        "profiles": {
+          "@id": "edc:profiles",
+          "@container": "@set"
         }
       }
     },
@@ -119,7 +128,8 @@
       "@context": {
         "counterPartyAddress": "edc:counterPartyAddress",
         "counterPartyId": "edc:counterPartyId",
-        "protocol": "edc:protocol"
+        "protocol": "edc:protocol",
+        "profile": "edc:profile"
       }
     },
     "CatalogRequest": {
@@ -128,6 +138,7 @@
         "counterPartyAddress": "edc:counterPartyAddress",
         "counterPartyId": "edc:counterPartyId",
         "protocol": "edc:protocol",
+        "profile": "edc:profile",
         "additionalScopes": {
           "@id": "edc:additionalScopes",
           "@container": "@set"
@@ -148,7 +159,8 @@
           "@id": "edc:callbackAddresses",
           "@container": "@set"
         },
-        "protocol": "edc:protocol"
+        "protocol": "edc:protocol",
+        "profile": "edc:profile"
       }
     },
     "QuerySpec": {
@@ -170,6 +182,7 @@
         "type": "edc:type",
         "counterPartyAddress": "edc:counterPartyAddress",
         "protocol": "edc:protocol",
+        "profile": "edc:profile",
         "callbackAddresses": {
           "@id": "edc:callbackAddresses",
           "@container": "@set"
@@ -240,6 +253,7 @@
         "dataDestination": "edc:dataDestination",
         "contractId": "edc:contractId",
         "protocol": "edc:protocol",
+        "profile": "edc:profile",
         "dataplaneMetadata": {
           "@id": "edc:dataplaneMetadata"
         }
@@ -527,6 +541,62 @@
       "@context": {
         "evaluationResult": "edc:evaluationResult",
         "error": "edc:error"
+      }
+    },
+    "DataspaceProfile": {
+      "@id": "edc:DataspaceProfile",
+      "@context": {
+        "name": "edc:name",
+        "protocol": {
+          "@id": "edc:protocol",
+          "@context": {
+            "path": "edc:path",
+            "binding": "edc:binding",
+            "version": "edc:version",
+            "namespace": "edc:namespace"
+          }
+        },
+        "jsonLdContextsUrl": {
+          "@id": "edc:jsonLdContextsUrl",
+          "@container": "@set"
+        }
+      }
+    },
+    "AssociateDataspaceProfile": {
+      "@id": "edc:AssociateDataspaceProfile",
+      "@context": {
+        "profiles": {
+          "@id": "edc:profiles",
+          "@container": "@set"
+        }
+      }
+    },
+    "DiscoveryRequest": {
+      "@id": "edc:DiscoveryRequest",
+      "@context": {
+        "counterPartyId": {
+          "@id": "edc:counterPartyId"
+        },
+        "counterPartyAddress": {
+          "@id": "edc:counterPartyAddress"
+        }
+      }
+    },
+    "DiscoveryResponse": {
+      "@id": "edc:DiscoveryResponse",
+      "@context": {
+        "profile": {
+          "@id": "edc:profile"
+        },
+        "version": {
+          "@id": "edc:version"
+        },
+        "counterPartyPath": {
+          "@id": "edc:counterPartyPath"
+        },
+        "binding": {
+          "@id": "edc:binding"
+        }
       }
     },
     "inForceDate": "edc:inForceDate",
