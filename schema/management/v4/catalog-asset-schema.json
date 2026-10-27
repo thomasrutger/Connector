@@ -23,7 +23,19 @@
           "type": "string"
         },
         "properties": {
-          "type": "object"
+          "type": "object",
+          "example": {
+            "endpointURL": "http://catalog/url",
+            "format": "http://w3c.org/dspace/profile/catalog"
+          },
+          "properties": {
+            "endpointURL": {
+              "type": "string"
+            },
+            "format": {
+              "type": "string"
+            }
+          }
         },
         "privateProperties": {
           "type": "object"

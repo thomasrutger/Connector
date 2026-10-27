@@ -3,6 +3,7 @@
     "@version": 1.1,
     "edc": "https://w3id.org/edc/v0.0.1/ns/",
     "dct": "http://purl.org/dc/terms/",
+    "dcat": "http://www.w3.org/ns/dcat#",
     "Asset": {
       "@id": "edc:Asset",
       "@context": {
@@ -56,7 +57,15 @@
         "properties": {
           "@id": "edc:properties",
           "@context": {
-            "@vocab": "https://w3id.org/edc/v0.0.1/ns/"
+            "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
+            "endpointURL": {
+              "@id": "dcat:endpointURL",
+              "@type": "@id"
+            },
+            "format": {
+              "@id": "dct:format",
+              "@type": "@id"
+            }
           }
         },
         "privateProperties": {
@@ -179,6 +188,8 @@
     "ContractNegotiation": {
       "@id": "edc:ContractNegotiation",
       "@context": {
+        "@import": "https://w3id.org/dspace/2025/1/odrl-profile.jsonld",
+        "@propagate": true,
         "type": "edc:type",
         "counterPartyAddress": "edc:counterPartyAddress",
         "protocol": "edc:protocol",
@@ -189,11 +200,13 @@
         },
         "counterPartyId": "edc:counterPartyId",
         "state": "edc:state",
+        "pending": "edc:pending",
         "errorDetail": "edc:errorDetail",
         "contractAgreementId": "edc:contractAgreementId",
         "createdAt": "edc:createdAt",
         "assetId": "edc:assetId",
-        "correlationId": "edc:correlationId"
+        "correlationId": "edc:correlationId",
+        "policy": "edc:policy"
       }
     },
     "CallbackAddress": {
@@ -219,6 +232,9 @@
         "reason": "edc:reason"
       }
     },
+    "RejectNegotiation": {
+      "@id": "edc:RejectNegotiation"
+    },
     "ContractAgreement": {
       "@id": "edc:ContractAgreement",
       "@context": {
@@ -232,7 +248,16 @@
         "assetId": "edc:assetId",
         "agreementId": "edc:agreementId",
         "contractSigningDate": "edc:contractSigningDate",
-        "claims": "edc:claims"
+        "claims": "edc:claims",
+        "retired": "edc:retired",
+        "retirementReason": "edc:retirementReason",
+        "retirementDate": "edc:retirementDate"
+      }
+    },
+    "RetireAgreement": {
+      "@id": "edc:RetireAgreement",
+      "@context": {
+        "reason": "edc:reason"
       }
     },
     "TransferRequest": {
@@ -507,6 +532,46 @@
         }
       }
     },
+    "ParticipantContextConfigValidation": {
+      "@id": "edc:ParticipantContextConfigValidation",
+      "@context": {
+        "valid": "edc:valid",
+        "violations": {
+          "@id": "edc:violations",
+          "@container": "@set",
+          "@context": {
+            "key": "edc:key",
+            "message": "edc:message"
+          }
+        }
+      }
+    },
+    "Partner": {
+      "@id": "edc:Partner",
+      "@context": {
+        "identity": "edc:identity",
+        "name": "edc:name",
+        "properties": {
+          "@id": "edc:properties",
+          "@type": "@json"
+        },
+        "groupIds": {
+          "@id": "edc:groupIds",
+          "@container": "@set"
+        }
+      }
+    },
+    "PartnerGroup": {
+      "@id": "edc:PartnerGroup",
+      "@context": {
+        "name": "edc:name",
+        "description": "edc:description",
+        "properties": {
+          "@id": "edc:properties",
+          "@type": "@json"
+        }
+      }
+    },
     "CelExpression": {
       "@id": "edc:CelExpression",
       "@context": {
@@ -517,6 +582,10 @@
         },
         "actions": {
           "@id": "edc:actions",
+          "@container": "@set"
+        },
+        "supportedOperators": {
+          "@id": "edc:supportedOperators",
           "@container": "@set"
         },
         "expression": "edc:expression",
@@ -543,6 +612,15 @@
         "error": "edc:error"
       }
     },
+    "TrustedIssuer": {
+      "@id": "edc:TrustedIssuer",
+      "@context": {
+        "supportedTypes": {
+          "@id": "edc:supportedTypes",
+          "@container": "@set"
+        }
+      }
+    },
     "DataspaceProfile": {
       "@id": "edc:DataspaceProfile",
       "@context": {
@@ -559,6 +637,16 @@
         "jsonLdContextsUrl": {
           "@id": "edc:jsonLdContextsUrl",
           "@container": "@set"
+        },
+        "trustedIssuers": {
+          "@id": "edc:trustedIssuers",
+          "@container": "@set",
+          "@context": {
+            "supportedTypes": {
+              "@id": "edc:supportedTypes",
+              "@container": "@set"
+            }
+          }
         }
       }
     },
@@ -591,11 +679,50 @@
         "version": {
           "@id": "edc:version"
         },
-        "counterPartyPath": {
-          "@id": "edc:counterPartyPath"
+        "counterParty": {
+          "@id": "edc:counterParty",
+          "@context": {
+            "path": "edc:path",
+            "dataServiceEndpoint": "edc:dataServiceEndpoint"
+          }
         },
         "binding": {
           "@id": "edc:binding"
+        }
+      }
+    },
+    "DcpScope": {
+      "@id": "edc:DcpScope",
+      "@context": {
+        "type": "edc:type",
+        "value": "edc:value",
+        "profile": "edc:profile",
+        "prefixMapping": "edc:prefixMapping"
+      }
+    },
+    "CachedDocument": {
+      "@id": "edc:CachedDocument",
+      "@context": {
+        "url": "edc:url",
+        "documentType": "edc:documentType",
+        "pullStrategy": "edc:pullStrategy",
+        "updatedAt": "edc:updatedAt",
+        "content": {
+          "@id": "edc:content",
+          "@type": "@json"
+        }
+      }
+    },
+    "SchemaValidatorRegistration": {
+      "@id": "edc:SchemaValidatorRegistration",
+      "@context": {
+        "version": "edc:version",
+        "validatedType": "edc:validatedType",
+        "schema": "edc:schema",
+        "updatedAt": "edc:updatedAt",
+        "profiles": {
+          "@id": "edc:profiles",
+          "@container": "@set"
         }
       }
     },

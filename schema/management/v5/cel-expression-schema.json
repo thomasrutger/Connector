@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "title": "CelExpressionSchema",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/CelExpression"
+    }
+  ],
+  "$id": "https://w3id.org/edc/connector/management/schema/v4/cel-expression-schema.json",
+  "definitions": {
+    "CelExpression": {
+      "type": "object",
+      "properties": {
+        "@context": {
+          "$ref": "https://w3id.org/edc/connector/management/schema/v4/context-schema.json"
+        },
+        "@type": {
+          "type": "string",
+          "const": "CelExpression"
+        },
+        "@id": {
+          "type": "string"
+        },
+        "leftOperand": {
+          "type": "string"
+        },
+        "expression": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "supportedOperators": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "EQ",
+              "NEQ",
+              "GT",
+              "GEQ",
+              "LT",
+              "LEQ",
+              "IS_PART_OF",
+              "IN",
+              "HAS_PART",
+              "IS_A",
+              "IS_ALL_OF",
+              "IS_ANY_OF",
+              "IS_NONE_OF"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "@context",
+        "@type",
+        "leftOperand",
+        "expression",
+        "description"
+      ]
+    }
+  }
+}
